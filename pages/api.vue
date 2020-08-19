@@ -258,7 +258,7 @@ export default {
     for (let branch of branches) {
       let v = "";
       try {
-        if (true) {
+        if (branch.name.match(/^v+[0-9]+/g) || branch.name === "master") {
           v = await $axios.$get(
             "https://api.github.com/repos/sideway/joi/contents/package.json?ref=" +
               branch.name,
@@ -275,7 +275,6 @@ export default {
       }
     }
     versions = await versions.sort((a, b) => Semver.compare(b, a));
-    console.log(versions)
     for (let version of versions) {
       const res = await $axios.$get(
         "https://api.github.com/repos/sideway/joi/contents/API.md?ref=" +
